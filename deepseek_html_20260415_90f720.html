@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Зелёный пеликан — фестиваль экологии и города</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #F5F5F5;
+            font-family: 'Helvetica Neue', 'Helvetica Light', 'Helvetica', 'Segoe UI', 'Roboto', sans-serif;
+            font-weight: 300;
+            color: #575656;
+            line-height: 1.45;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 300;
+            letter-spacing: -0.01em;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Шапка с навигацией (минимал + акцент) */
+        .navbar {
+            background-color: #F5F5F5;
+            padding: 24px 0 16px;
+            border-bottom: 1px solid rgba(87,86,86,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(12px);
+            background-color: rgba(245,245,245,0.92);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 350;
+            letter-spacing: -0.3px;
+            color: #575656;
+            text-decoration: none;
+            border-left: 3px solid #FFE17D;
+            padding-left: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #575656;
+            font-size: 1rem;
+            font-weight: 350;
+            transition: color 0.2s;
+            padding-bottom: 4px;
+            border-bottom: 1px solid transparent;
+        }
+
+        .nav-links a.active-page {
+            border-bottom-color: #FFE17D;
+            color: #3b3a3a;
+            font-weight: 400;
+        }
+
+        .nav-links a:hover {
+            color: #FFE17D;
+            border-bottom-color: #FFE17D;
+        }
+
+        /* Герой с ярким фоном */
+        .hero {
+            padding: 64px 0 48px;
+            text-align: center;
+            background: linear-gradient(135deg, #FFF8E7 0%, #F5F5F5 100%);
+            border-radius: 0 0 48px 48px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: 3.4rem;
+            font-weight: 300;
+            color: #575656;
+            margin-bottom: 24px;
+        }
+
+        .hero-accent {
+            background-color: #FFE17D;
+            display: inline-block;
+            padding: 0 12px;
+            color: #2e2e2e;
+            border-radius: 40px;
+        }
+
+        .date-location {
+            font-size: 1.1rem;
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            background: rgba(255,225,125,0.2);
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 12px 28px;
+            border-radius: 60px;
+            backdrop-filter: blur(2px);
+        }
+
+        /* секции */
+        .section {
+            margin: 72px 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 36px;
+            font-weight: 320;
+            border-left: 5px solid #FFE17D;
+            padding-left: 20px;
+        }
+
+        /* сетка для карточек */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 32px 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            border: 1px solid rgba(255,225,125,0.3);
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.08);
+            border-color: #FFE17D;
+        }
+
+        /* минималистичные иконки — только контур, волосковые */
+        .minimal-icon {
+            width: 44px;
+            height: 44px;
+            stroke: #575656;
+            stroke-width: 1.3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            font-weight: 340;
+        }
+
+        /* Галерея */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            margin: 40px 0 20px;
+        }
+        .gallery-item {
+            border-radius: 28px;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            background: #e9e9e9;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.03);
+        }
+
+        /* партнеры стиль */
+        .partner-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 32px;
+        }
+        .partner-item {
+            background: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            border: 1px solid #FFE17D;
+            font-size: 0.85rem;
+            font-weight: 350;
+            transition: 0.2s;
+        }
+        .partner-item:hover {
+            background: #FFE17D;
+            color: #2f2f2f;
+        }
+
+        .info-block {
+            background: #fffdf7;
+            border-radius: 32px;
+            padding: 40px 36px;
+            border: 1px solid #FFE17D;
+            margin: 40px 0;
+            text-align: center;
+        }
+        .btn-outline {
+            border: 1px solid #575656;
+            background: transparent;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 350;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #575656;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+        .btn-outline:hover {
+            background-color: #FFE17D;
+            border-color: #FFE17D;
+            color: #2e2e2e;
+        }
+
+        footer {
+            text-align: center;
+            padding: 48px 0 32px;
+            border-top: 1px solid rgba(87,86,86,0.1);
+            font-size: 0.8rem;
+            margin-top: 40px;
+            background: #F5F5F5;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .bullet-list li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+        .bullet-list li::before {
+            content: "—";
+            color: #FFE17D;
+            position: absolute;
+            left: 4px;
+            font-weight: 400;
+        }
+
+        @media (max-width: 720px) {
+            .hero h1 { font-size: 2.2rem; }
+            .section-title { font-size: 1.6rem; }
+            .container { padding: 0 20px; }
+            .nav-container { flex-direction: column; align-items: flex-start; }
+            .info-block { padding: 28px 20px; }
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="container nav-container">
+        <a href="#" class="logo">Зелёный пеликан</a>
+        <ul class="nav-links">
+            <li><a href="#" class="active-page">Фестиваль</a></li>
+            <li><a href="#" id="contestLinkPlaceholder" style="pointer-events: none; opacity:0.7;">Конкурс «Зелёный город»</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <!-- Геройский блок с ярким оформлением -->
+    <div class="hero">
+        <div class="container">
+            <h1>Фестиваль<br><span class="hero-accent">«Зелёный пеликан»</span></h1>
+            <div class="date-location">
+                <span>🌿 26–27 мая 2026</span>
+                <span>📍 Санкт-Петербург · Воронихинский сквер · Кампус Герцена</span>
+            </div>
+            <p style="max-width: 680px; margin: 28px auto 0; font-size: 1.1rem;">Популяризация экологической культуры и формирование городской среды для просветительских, образовательных и экологических задач.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- О фестивале + красочные карточки -->
+        <div class="section">
+            <h2 class="section-title">О фестивале</h2>
+            <div class="grid-2col">
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <h3>Экокультура в городе</h3>
+                    <p>Объединяем академические, молодёжные и профессиональные сообщества для решения экологических задач. Развиваем инициативы в области природосообразной архитектуры и образования.</p>
+                </div>
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <path d="M3 9l9-6 9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <path d="M9 22V12h6v10" />
+                    </svg>
+                    <h3>Локации в сердце города</h3>
+                    <p>Воронихинский сквер, Открытый кампус (Казанская ул., 1) и главный кампус на наб. Мойки, 48–52. Уникальное пространство для диалога об экологии, урбанистике и искусстве.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ГАЛЕРЕЯ с фотографиями (плейсхолдеры из Unsplash с зелёной тематикой) -->
+        <div class="section">
+            <h2 class="section-title">Фотогалерея фестиваля</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=450&fit=crop" alt="Зелёный парк" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=450&fit=crop" alt="Экологическое пространство" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1582233479366-6a9e5f5e8e9b?w=600&h=450&fit=crop" alt="Городское озеленение" loading="lazy">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=600&h=450&fit=crop" alt="Образовательная площадка" loading="lazy">
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 16px; font-size: 0.8rem; color:#7f7e7e;">Атмосфера прошлых мероприятий и зелёные пространства Санкт-Петербурга</p>
+        </div>
+
+        <!-- Программа фестиваля: этапы с минималистичными иконками (контурные, без лишнего) -->
+        <div class="section">
+            <h2 class="section-title">Программа фестиваля</h2>
+            <div class="grid-2col">
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <h3>Подготовительный этап</h3>
+                    <ul class="bullet-list" style="margin-top: 12px;">
+                        <li>Лекторий «Садово-парковое искусство» (22.09 – 25.12.2025)</li>
+                        <li>Осенняя школа «Среда обитания»: умное земледелие, переработка отходов (27–31 окт 2025)</li>
+                        <li>Весенняя школа «Зелёный город»: природосообразная архитектура, экотехнические прототипы (30 мар – 3 апр 2026)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                        <line x1="16" y1="13" x2="8" y2="13" />
+                        <line x1="16" y1="17" x2="8" y2="17" />
+                    </svg>
+                    <h3>Основные дни: 26–27 мая 2026</h3>
+                    <ul class="bullet-list" style="margin-top: 12px;">
+                        <li>Выставка-экспозиция проектов и художественные инсталляции</li>
+                        <li>Лекторий и экспертный клуб: дискуссии об экологии, урбанистике</li>
+                        <li>Мастер-классы, экскурсии в лабораториях и открытых пространствах</li>
+                        <li>Конкурс молодёжных проектов «Зелёный город»</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Партнеры и организаторы -->
+        <div class="section">
+            <h2 class="section-title">Организаторы и партнеры</h2>
+            <div class="partner-list">
+                <span class="partner-item">РГПУ им. А.И. Герцена</span>
+                <span class="partner-item">Комитет по благоустройству СПб</span>
+                <span class="partner-item">Комитет по науке и высшей школе</span>
+                <span class="partner-item">Комитет по труду и занятости</span>
+                <span class="partner-item">Комитет по природопользованию</span>
+                <span class="partner-item">ООО «ПАРКСИЗОНС»</span>
+            </div>
+            <p style="margin-top: 28px; text-align: center; font-size: 0.9rem;">При поддержке администрации Санкт-Петербурга и Открытого кампуса Герценовского университета.</p>
+        </div>
+
+        <!-- Дополнительный блок про конкурс и регистрацию -->
+        <div class="info-block">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#575656" stroke-width="1.2" style="margin-bottom: 12px;">
+                <path d="M20 12v8H4v-8M12 2v12m-3-3 3 3 3-3" />
+                <rect x="2" y="6" width="20" height="6" rx="1" />
+            </svg>
+            <h3 style="font-size: 1.6rem; margin: 12px 0 16px;">Стань частью фестиваля</h3>
+            <p>Школьники, студенты, профессионалы и все жители города — присоединяйтесь к программе фестиваля. Регистрация на мероприятия откроется на официальном сайте. Участвуйте в конкурсе проектов «Зелёный город» и получите шанс реализовать свою идею в городской среде.</p>
+            <a href="#" id="mockContestBtn" class="btn-outline">→ Подробнее о конкурсе «Зелёный город»</a>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2025–2026 Фестиваль «Зелёный пеликан» · РГПУ им. А.И. Герцена · Открытый кампус</p>
+        <p style="margin-top: 8px;">E-mail: terraherz-spb@yandex.ru · Сайт: greenpelican.herzen.spb.ru</p>
+        <p style="margin-top: 12px;">🌱 Формируем экологическую культуру и зелёное будущее Санкт-Петербурга</p>
+    </div>
+</footer>
+
+<script>
+    // Небольшая интерактивность: кнопка ведёт на заглушку (в реальном проекте будет страница конкурса)
+    const contestBtn = document.getElementById('mockContestBtn');
+    if (contestBtn) {
+        contestBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Страница конкурса «Зелёный город» будет доступна в полной версии сайта. Следите за обновлениями!');
+        });
+    }
+    // ссылка в навигации (конкурс) пока не активна — но для имитации целостности
+    const contestNav = document.getElementById('contestLinkPlaceholder');
+    if(contestNav){
+        contestNav.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Полная версия с двумя страницами доступна в основном проекте. Здесь представлена главная страница фестиваля.');
+        });
+    }
+</script>
+</body>
+</html>
