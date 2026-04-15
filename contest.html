@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Конкурс «Зелёный город» — фестиваль Зелёный пеликан</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #F5F5F5;
+            font-family: 'Helvetica Neue', 'Helvetica Light', 'Helvetica', 'Segoe UI', 'Roboto', sans-serif;
+            font-weight: 300;
+            color: #575656;
+            line-height: 1.45;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 300;
+            letter-spacing: -0.01em;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Шапка с навигацией (минимал + акцент) */
+        .navbar {
+            background-color: #F5F5F5;
+            padding: 24px 0 16px;
+            border-bottom: 1px solid rgba(87,86,86,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(12px);
+            background-color: rgba(245,245,245,0.92);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 350;
+            letter-spacing: -0.3px;
+            color: #575656;
+            text-decoration: none;
+            border-left: 3px solid #FFE17D;
+            padding-left: 12px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #575656;
+            font-size: 1rem;
+            font-weight: 350;
+            transition: color 0.2s;
+            padding-bottom: 4px;
+            border-bottom: 1px solid transparent;
+        }
+
+        .nav-links a.active-page {
+            border-bottom-color: #FFE17D;
+            color: #3b3a3a;
+            font-weight: 400;
+        }
+
+        .nav-links a:hover {
+            color: #FFE17D;
+            border-bottom-color: #FFE17D;
+        }
+
+        /* Герой конкурса — яркий, с акцентом */
+        .hero-contest {
+            padding: 56px 0 48px;
+            text-align: center;
+            background: linear-gradient(120deg, #FFF3CF 0%, #F5F5F5 80%);
+            border-radius: 0 0 48px 48px;
+            margin-bottom: 32px;
+        }
+
+        .hero-contest h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            color: #575656;
+            margin-bottom: 20px;
+        }
+
+        .hero-accent {
+            background-color: #FFE17D;
+            display: inline-block;
+            padding: 0 12px;
+            border-radius: 48px;
+            color: #2e2e2e;
+        }
+
+        .contest-badge {
+            background-color: #575656;
+            color: #FFE17D;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-top: 16px;
+            font-weight: 400;
+        }
+
+        /* секции */
+        .section {
+            margin: 70px 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 36px;
+            font-weight: 320;
+            border-left: 5px solid #FFE17D;
+            padding-left: 20px;
+        }
+
+        /* сетка */
+        .grid-2col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 32px 28px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            border: 1px solid rgba(255,225,125,0.4);
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #FFE17D;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+        }
+
+        /* волосковые контурные иконки */
+        .minimal-icon {
+            width: 44px;
+            height: 44px;
+            stroke: #575656;
+            stroke-width: 1.3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 20px;
+        }
+
+        .info-block {
+            background: #FFFDF5;
+            border-radius: 32px;
+            padding: 36px 34px;
+            border: 1px solid #FFE17D;
+            margin: 40px 0;
+        }
+
+        .deadline-badge {
+            background-color: #FFE17D;
+            color: #575656;
+            display: inline-block;
+            padding: 6px 24px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .bullet-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .bullet-list li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+        }
+        .bullet-list li::before {
+            content: "—";
+            color: #FFE17D;
+            position: absolute;
+            left: 4px;
+            font-weight: 400;
+        }
+
+        .btn-outline {
+            border: 1px solid #575656;
+            background: transparent;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 350;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #575656;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 16px;
+        }
+
+        .btn-outline:hover {
+            background-color: #FFE17D;
+            border-color: #FFE17D;
+            color: #2e2e2e;
+        }
+
+        .partner-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-top: 24px;
+            justify-content: center;
+        }
+        .partner-tag {
+            background: white;
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 1px solid #FFE17D;
+            font-size: 0.8rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 48px 0 32px;
+            border-top: 1px solid rgba(87,86,86,0.1);
+            font-size: 0.8rem;
+            margin-top: 40px;
+            background: #F5F5F5;
+        }
+
+        @media (max-width: 720px) {
+            .hero-contest h1 { font-size: 2rem; }
+            .section-title { font-size: 1.6rem; }
+            .container { padding: 0 20px; }
+            .nav-container { flex-direction: column; align-items: flex-start; }
+            .info-block { padding: 28px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container nav-container">
+        <a href="index.html" class="logo">Зелёный пеликан</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Фестиваль</a></li>
+            <li><a href="contest.html" class="active-page">Конкурс «Зелёный город»</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div class="hero-contest">
+        <div class="container">
+            <h1>Конкурс молодёжных проектов<br><span class="hero-accent">«Зелёный город»</span></h1>
+            <div class="contest-badge">🌱 В рамках фестиваля «Зелёный пеликан»</div>
+            <p style="max-width: 720px; margin: 24px auto 0; font-size: 1.1rem;">Исследования, инженерные и дизайн-проекты для устойчивого развития городской среды. Твой шанс изменить Санкт-Петербург!</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Основная информация о конкурсе -->
+        <div class="info-block">
+            <div class="deadline-badge">📅 Приём заявок до 30 апреля 2026</div>
+            <h2 style="font-size: 1.8rem; margin-bottom: 16px;">Цели и задачи конкурса</h2>
+            <p>Конкурс «Зелёный город» объединяет молодых исследователей, архитекторов, экологов и изобретателей для решения реальных экологических проблем мегаполиса. Мы поддерживаем проекты в области природосообразной архитектуры, ландшафтного дизайна, переработки отходов и инновационных экотехнологий.</p>
+            <ul class="bullet-list" style="margin: 28px 0 16px;">
+                <li>Развитие прикладных компетенций в природопользовании и городском озеленении</li>
+                <li>Междисциплинарное проектирование: школьники, студенты, молодые специалисты</li>
+                <li>Создание прототипов экотехнических моделей с применением LLM, фотограмметрии, дистанционного зондирования</li>
+                <li>Рекомендация лучших проектов к реализации на территории кампуса и городских пространствах</li>
+            </ul>
+            <a href="#" id="applyMockBtn" class="btn-outline">📎 Подать заявку (положение на сайте)</a>
+        </div>
+
+        <!-- Номинации и направления (сетка) -->
+        <div class="section">
+            <h2 class="section-title">Номинации и направления</h2>
+            <div class="grid-2col">
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                        <circle cx="12" cy="12" r="3" />
+                    </svg>
+                    <h3>Природосообразная архитектура</h3>
+                    <p>Экологичные здания, зелёные крыши, фасады, интеграция природы в городскую инфраструктуру. Умное земледелие и городское огородничество.</p>
+                </div>
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <path d="M3 6h18v12H3z" />
+                        <path d="M8 12h8" />
+                        <path d="M12 8v8" />
+                    </svg>
+                    <h3>Экотехническое проектирование</h3>
+                    <p>Переработка вторичного сырья, энергосберегающие технологии, био- и экотехнические модели, очистка воды и воздуха.</p>
+                </div>
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 16v-4M12 8h.01" />
+                    </svg>
+                    <h3>Исследования + LLM и Big Data</h3>
+                    <p>Применение больших языковых моделей, дистанционного зондирования и фотограмметрии для анализа антропогенных и природных факторов.</p>
+                </div>
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <path d="M3 9l9-6 9 6v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                        <path d="M9 22V12h6v10" />
+                    </svg>
+                    <h3>Ландшафтный дизайн и озеленение</h3>
+                    <p>Проекты благоустройства дворов, парков, общественных пространств с использованием устойчивых растений и экоматериалов.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Этапы конкурса в стиле timeline -->
+        <div class="section">
+            <h2 class="section-title">Этапы и ключевые даты</h2>
+            <div class="grid-2col">
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
+                    <h3>До 30 апреля 2026</h3>
+                    <p>Подача заявок и проектных материалов (описание, визуализация, макет / прототип).</p>
+                    <p style="margin-top: 12px; font-size: 0.85rem;">✅ Регистрация на официальном сайте фестиваля.</p>
+                </div>
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <h3>1–15 мая 2026</h3>
+                    <p>Экспертная оценка работ, отбор финалистов. Жюри из представителей РГПУ, комитетов и партнёров.</p>
+                </div>
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <path d="M20 12v8H4v-8M12 2v12m-3-3 3 3 3-3" />
+                    </svg>
+                    <h3>26 мая 2026</h3>
+                    <p>Питч-сессия и защита проектов перед экспертным советом в Открытом кампусе (Казанская ул., 1).</p>
+                </div>
+                <div class="card">
+                    <svg class="minimal-icon" viewBox="0 0 24 24">
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83" />
+                        <path d="M2 12h4M18 12h4" />
+                    </svg>
+                    <h3>27 мая 2026</h3>
+                    <p>Торжественная церемония награждения победителей и призёров. Презентация лучших проектов на главной сцене фестиваля.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Призы и поддержка -->
+        <div class="info-block">
+            <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="#575656" stroke-width="1.2" style="margin-bottom: 12px;">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                <circle cx="12" cy="12" r="3" />
+            </svg>
+            <h3 style="font-size: 1.7rem; margin: 12px 0 16px;">🏆 Награды и перспективы</h3>
+            <p>Победители конкурса награждаются дипломами, сертификатами и памятными призами от партнёров. Лучшие проекты получат рекомендацию к реализации на территориях РГПУ им. А.И. Герцена и городских пространствах Санкт-Петербурга при поддержке Комитета по благоустройству. Возможность стажировок и включения в реальные эко-инициативы города.</p>
+            <div style="margin-top: 28px;">
+                <h4 style="margin-bottom: 12px;">Партнёры конкурса</h4>
+                <div class="partner-list">
+                    <span class="partner-tag">РГПУ им. А.И. Герцена</span>
+                    <span class="partner-tag">Комитет по природопользованию</span>
+                    <span class="partner-tag">Комитет по благоустройству</span>
+                    <span class="partner-tag">ООО «ПАРКСИЗОНС»</span>
+                    <span class="partner-tag">Открытый кампус</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Как участвовать: подробные инструкции -->
+        <div class="section">
+            <div style="background: #FEF9E6; border-radius: 32px; padding: 36px 32px; text-align: center;">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#575656" stroke-width="1.2">
+                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                <h3 style="font-size: 1.7rem; margin: 16px 0 12px;">Как подать заявку?</h3>
+                <p style="max-width: 700px; margin: 0 auto;">Ознакомьтесь с полным Положением о конкурсе на официальном сайте <strong>greenpelican.herzen.spb.ru</strong>. Заявки принимаются через электронную форму. Необходимо предоставить: описание проекта, визуализацию / 3D-модель / схемы, технико-экономическое обоснование (для инженерных проектов). Работы принимаются в формате PDF и дополнительных материалов.</p>
+                <div style="margin-top: 28px;">
+                    <a href="#" id="officialSiteMock" class="btn-outline" style="margin-right: 12px;">🌐 Перейти на сайт конкурса</a>
+                    <a href="#" id="docsMock" class="btn-outline">📄 Скачать положение (PDF)</a>
+                </div>
+                <p style="margin-top: 28px; font-size: 0.85rem;">Контакт для вопросов: <strong>terraherz-spb@yandex.ru</strong> · Тема письма: «Конкурс Зелёный город»</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <p>© 2025–2026 Фестиваль «Зелёный пеликан» · Конкурс молодёжных проектов «Зелёный город»</p>
+        <p style="margin-top: 8px;">РГПУ им. А.И. Герцена · Открытый кампус · greenpelican.herzen.spb.ru</p>
+        <p style="margin-top: 12px;">🌿 Создаём устойчивое будущее вместе</p>
+    </div>
+</footer>
+
+<script>
+    // имитация кнопок для демо (в реальном проекте ведут на настоящие страницы)
+    const applyBtn = document.getElementById('applyMockBtn');
+    const siteBtn = document.getElementById('officialSiteMock');
+    const docsBtn = document.getElementById('docsMock');
+
+    if(applyBtn) {
+        applyBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Регистрация на конкурс откроется 1 марта 2026. Следите за обновлениями на официальном сайте greenpelican.herzen.spb.ru');
+        });
+    }
+    if(siteBtn) {
+        siteBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.open('https://greenpelican.herzen.spb.ru/', '_blank');
+        });
+    }
+    if(docsBtn) {
+        docsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            alert('Полное положение о конкурсе будет опубликовано на сайте фестиваля в разделе «Конкурс».');
+        });
+    }
+</script>
+</body>
+</html>
